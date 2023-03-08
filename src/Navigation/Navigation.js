@@ -12,6 +12,7 @@ export default function Navigation() {
 
     return (
         <Tab.Navigator>
+
             <Tab.Screen
                 name="Favorite"
                 component={FavoriteScreen}
@@ -26,7 +27,8 @@ export default function Navigation() {
                 name="Pokedex"
                 component={PokedexNavigation}
                 options={{
-                    tabBarLabel: "",
+                    headerShown: false,
+                    tabBarLabel: '',
                     headerTitleAlign: 'center',
                     tabBarIcon: renderPokeball
                 }}
@@ -51,3 +53,4 @@ const renderPokeball = () =>
         source={require("../assets/pokeball.png")}
         style={{ width: 75, height: 75, top: -15 }}
     />
+
