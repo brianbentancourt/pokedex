@@ -1,13 +1,21 @@
 import { StyleSheet, View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Stats({ stats }) {
+    const [maxStat, setMaxStat] = useState(100)
+
+    useEffect(() => {
+        const max = Math.max(...stats.map(s => s.base_stat))
+        if (max > 100)
+            setMaxStat(max)
+    }, [stats])
 
     const barStyles = (number) => {
         const color = number > 49 ? '#00ac17' : '#ff853e'
+        const width = (number * 100 / maxStat).toFixed(2)
         return {
             backgroundColor: color,
-            width: `${number}%`
+            width: `${width}%`
         }
     }
 
