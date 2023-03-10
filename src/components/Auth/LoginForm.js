@@ -4,7 +4,7 @@ import {
     View,
     Text,
     TextInput,
-    Button,
+    Pressable,
     Keyboard
 } from 'react-native'
 import { useFormik } from 'formik'
@@ -50,7 +50,10 @@ export default function LoginForm() {
                 value={formik.values.password}
                 onChangeText={(text) => formik.setFieldValue('password', text)}
             />
-            <Button title='Entrar' onPress={formik.handleSubmit} />
+            <Pressable style={styles.button} onPress={formik.handleSubmit}>
+                <Text style={styles.textButton} >Entrar</Text>
+            </Pressable>
+
             <Text style={styles.error}>{formik.errors.userName}</Text>
             <Text style={styles.error}>{formik.errors.password}</Text>
             <Text style={styles.error}>{error}</Text>
@@ -88,6 +91,26 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius: 10
+    },
+    buttonContainer: {
+        padding: 12,
+    },
+    button: {
+        margin: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 10,
+        elevation: 3,
+        backgroundColor: 'black',
+    },
+    textButton: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
     },
     error: {
         textAlign: 'center',
