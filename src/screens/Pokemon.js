@@ -5,22 +5,12 @@ import { getPokemonDetailsApi } from '../api/pokemon'
 import Header from '../components/Pokemon/Header'
 import Type from '../components/Pokemon/Type'
 import Stats from '../components/Pokemon/Stats'
+import Favorite from '../components/Pokemon/Favorite'
+import useAuth from '../hooks/useAuth'
 
 export default function Pokemon({ route: { params }, navigation }) {
     const [pokemon, setPokemon] = useState()
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerRight: () => null,
-            headerLeft: () => <Icon
-                name='arrow-left'
-                color='#fff'
-                size={20}
-                style={{ marginLeft: 5 }}
-                onPress={() => navigation.goBack()}
-            />
-        })
-    }, [navigation, params])
+    const { auth } = useAuth()
 
     useEffect(() => {
         (async () => {
@@ -35,6 +25,19 @@ export default function Pokemon({ route: { params }, navigation }) {
 
     if (!pokemon)
         return null;
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => auth && <Favorite id={pokemon?.id} />,
+            headerLeft: () => <Icon
+                name='arrow-left'
+                color='#fff'
+                size={20}
+                style={{ marginLeft: 5 }}
+                onPress={() => navigation.goBack()}
+            />
+        })
+    }, [navigation, params])
 
     return (
         <ScrollView>
