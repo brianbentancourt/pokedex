@@ -13,6 +13,19 @@ export default function Pokemon({ route: { params }, navigation }) {
     const { auth } = useAuth()
 
     useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => auth && <Favorite id={pokemon?.id} />,
+            headerLeft: () => <Icon
+                name='arrow-left'
+                color='#fff'
+                size={20}
+                style={{ marginLeft: 5 }}
+                onPress={() => navigation.goBack()}
+            />
+        })
+    }, [navigation, params, pokemon])
+
+    useEffect(() => {
         (async () => {
             try {
                 const response = await getPokemonDetailsApi(params.id)
@@ -24,20 +37,7 @@ export default function Pokemon({ route: { params }, navigation }) {
     }, [params])
 
     if (!pokemon)
-        return null;
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerRight: () => auth && <Favorite id={pokemon?.id} />,
-            headerLeft: () => <Icon
-                name='arrow-left'
-                color='#fff'
-                size={20}
-                style={{ marginLeft: 5 }}
-                onPress={() => navigation.goBack()}
-            />
-        })
-    }, [navigation, params])
+        return null
 
     return (
         <ScrollView>
